@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selamat Wisuda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a7f3d0, #34d399, #065f46);
+    color: #fff;
+    overflow-x: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    padding: clamp(15px, 4vw, 30px);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: fadeIn 2s ease-out;
+    z-index: 2;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    margin-bottom: 12px;
+    animation: glow 2.5s infinite alternate;
+  }
+  p {
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+    opacity: 0.9;
+    animation: fadeUp 2s ease-out;
+    line-height: 1.5;
+  }
+  .profile-pic {
+    width: clamp(80px, 25vw, 140px);
+    height: clamp(80px, 25vw, 140px);
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    margin: 15px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: zoomIn 1.8s ease-out;
+  }
+  .name {
+    font-weight: 600;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    margin: 12px 0;
+    animation: zoomIn 1.8s ease-out;
+  }
+  .decor {
+    margin: 20px auto;
+    height: 3px;
+    width: 60%;
+    background: linear-gradient(90deg, #bbf7d0, #22c55e, #bbf7d0);
+    border-radius: 999px;
+    animation: expand 3s infinite alternate;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {from{opacity:0; transform:scale(0.9)} to{opacity:1; transform:scale(1)}}
+  @keyframes fadeUp {from{opacity:0; transform:translateY(30px)} to{opacity:1; transform:translateY(0)}}
+  @keyframes zoomIn {from{opacity:0; transform:scale(0.7)} to{opacity:1; transform:scale(1)}}
+  @keyframes glow {from{text-shadow:0 0 6px #bbf7d0,0 0 12px #22c55e} to{text-shadow:0 0 12px #86efac,0 0 20px #4ade80}}
+  @keyframes expand {from{width:30%} to{width:70%}}
+
+  /* Falling leaves */
+  .leaf {
+    position: absolute;
+    top: -10%;
+    width: 25px;
+    height: 25px;
+    background: url('https://cdn-icons-png.flaticon.com/512/765/765560.png') no-repeat center/contain;
+    animation: fall linear infinite;
+    opacity: 0.8;
+  }
+  @keyframes fall {
+    0% {transform: translateY(-10%) rotate(0deg);}
+    100% {transform: translateY(110vh) rotate(360deg);}
+  }
+
+  /* Musik Button */
+  #playBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 18px);
+    border: none;
+    border-radius: 999px;
+    background: #22c55e;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    transition: transform 0.2s ease;
+    z-index: 99;
+  }
+  #playBtn:hover {
+    transform: scale(1.05);
+  }
+</style>
+
+</head>
+<body>
+  <div class="card">
+    <h1>🎓 Selamat Wisuda 🎓</h1>
+    <div class="decor"></div>
+
+    <!-- Foto Profil -->
+    <img src="MSc/tiara.jpg" alt="Foto Tiara" class="profile-pic">
+
+    <p>Selamat atas keberhasilanmu,</p>
+    <div class="name">🌿 Tiara Harlianti S.SI 🌿</div>
+    <p>"Selamat atas kelulusanmu, Tiara 🎓✨. Maaf kemarin aku belum sempat datang, tapi aku benar-benar ikut bangga atas pencapaianmu. Semoga usaha dan kerja keras yang sudah kamu jalani menjadi keberkahan untuk masa depanmu, dan semoga kebahagiaan selalu menyertai langkahmu ke depan."</p>
+    <div class="decor"></div>
+    <p style="font-size:0.9rem; opacity:0.7;">Ucapan hangat dari sahabatmu 💚</p>
+  </div>
+
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <source src="Msc/Photograph.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="playBtn">🎵 Putar Musik</button>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    const playBtn = document.getElementById("playBtn");
+
+    playBtn.addEventListener("click", () => {
+      music.play();
+      playBtn.style.display = "none";
+    });
+
+    // Generate falling leaves
+    function createLeaf(){
+      const leaf = document.createElement('div');
+      leaf.classList.add('leaf');
+      leaf.style.left = Math.random()*100 + 'vw';
+      leaf.style.animationDuration = (5+Math.random()*5) + 's';
+      leaf.style.opacity = Math.random();
+      document.body.appendChild(leaf);
+      setTimeout(()=>leaf.remove(), 10000);
+    }
+    setInterval(createLeaf, 800);
+  </script>
+</body>
+</html>
